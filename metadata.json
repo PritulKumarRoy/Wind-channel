@@ -1,0 +1,6 @@
+{
+  "name": "Wind Channel",
+  "description": "Wind Channel is an authoritative, clean, modern weather application with hyper-local forecasts, live radar, detailed wind telemetry, and 10-day outlooks on an elegant, pristine white canvas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
