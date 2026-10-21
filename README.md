@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="e.png" width="120" height="120" alt="ic_launcher.png"/>
+  <img src="e.png" width="120" height="120" alt="ic_launcher"/>
 </div>
 
 <h1 align="center">Wind Channel</h1>
