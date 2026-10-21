@@ -1,177 +1,197 @@
 # 🌤️ Wind Channel — Minimal & Modern Weather Observatory
 
-**Wind Channel** is a modern, clean, and polished weather app for Android crafted with **Kotlin** and **Jetpack Compose (Material Design 3)**. Built upon open, high-precision meteorological telemetry from Open-Meteo, Wind Channel delivers hyper-local forecasts, interactive hourly trend charts, 10-day outlook bars, and custom-rendered Canvas weather instruments—all wrapped in an adaptable dual-mode theme system.
+**Wind Channel** is a clean, modern weather app for Android built with **Kotlin** and **Jetpack Compose (Material Design 3)**. It uses the free [Open-Meteo](https://open-meteo.com/) forecast and geocoding APIs to show current conditions, a 24-hour hourly ribbon, a 10-day outlook and a set of custom Canvas-drawn weather instruments, in a light and a dark theme.
+
+The app is deliberately honest about its data: every number comes either from Open-Meteo or from a clearly labelled calculation. If something is not available, the app shows "—" instead of guessing, and it never displays made-up weather.
 
 ---
 
 ## ✨ Features
 
-### 🌓 Dual-Mode Theme Engine
-* **Clean White Canvas (Light Mode):** An editorial, magazine-like interface featuring pure white backgrounds (`#FFFFFF`), halite salt surface tints, crisp slate borders, and high-contrast ink-black numerals (`#090D14`).
-* **Obsidian Night (Dark Mode):** Deep velvet dark atmosphere (`#090D14`) paired with elevated slate card containers (`#111827`) and luminescent white typography (`#FFFFFF`).
-* **One-Tap Instant Toggle:** Dedicated theme switcher icon directly in the top app bar and within Settings. Every numeral, label, gauge, card, and dialog adapts immediately.
+### 🌓 Light & Dark Themes
+* **Light mode:** white canvas (`#FFFFFF`), soft slate borders and tints, ink-black numerals (`#090D14`), with a subtle sky gradient at the top that changes with the current condition (clear day/night, cloudy, rain, storm, snow).
+* **Dark mode:** deep navy-black background (`#090D14`), elevated slate cards (`#111827`) and white text, with matching condition gradients.
+* **System theme on first launch:** the app starts in whatever your device is set to. After that, your own choice wins.
+* **Instant toggle:** a sun/moon button in the top bar, plus a switch in Settings.
 
-### 🌡️ Hero Atmospheric Presentation
-* **Prominent Temperature Display:** Large, clean typography (82sp) showing real-time temperature formatted in either Celsius or Fahrenheit.
-* **Comprehensive Current Stats:** Real-time condition titles, feels-like temperature, daily High/Low extremes, and an atmospheric condition summary badge.
-* **Contextual Advisories:** Severe weather alert banners whenever turbulent weather patterns are detected.
+### 🌡️ Current Conditions
+* Large 82sp temperature, condition title with icon and a short summary badge.
+* Today's high and low, plus "feels like".
+* **°C / °F toggle** (top bar pill or Settings). Choosing °F also switches wind speed to mph and visibility to miles, so one switch selects metric or imperial throughout.
+* **Weather notices:** a red banner appears for thunderstorms, strong wind (sustained ≥ 45 km/h or gusts ≥ 70 km/h), very high UV (≥ 8), snow, and fog or visibility below 1 km. These are derived from the forecast data, are worded as such, and are **not official weather warnings**.
 
-### ⏱️ Interactive Hourly Forecast Ribbon
-* **Three Analytical Views:**
-  * **Temperature (°C / °F):** Hourly temperature progression with custom weather icons.
-  * **Precipitation (%):** Rain probability indicators with dynamic blue droplet styling.
-  * **Wind Speed (km/h / mph):** 24-hour wind velocity trend curves.
-* **"Now" Indicator:** Highlights the current hour with distinct high-contrast formatting.
+### ⏱️ Hourly Forecast
+A horizontally scrolling ribbon of the next **24 hours**, starting at the current hour (labelled "Now"). Switch between three views:
+* **Temp:** hourly temperature with a weather icon.
+* **Rain:** precipitation probability (%).
+* **Wind:** hourly wind speed in km/h or mph.
 
-### 📅 10-Day Extended Outlook
-* **Comparative Range Bars:** Visual horizontal gradient bars comparing each day’s temperature span relative to 10-day global extremes.
-* **Live Temperature Indicator:** A dynamic marker showing exactly where current conditions sit on today's span.
-* **Precipitation Probability Badges:** Displays rain chances for days with greater than 20% precipitation probability.
+### 📅 10-Day Outlook
+* One row per day with icon, low, high and a horizontal range bar.
+* Bars are scaled against the coldest and warmest values across the 10 days, so days can be compared at a glance.
+* On today's row, a marker shows where the current temperature sits.
+* A rain-probability badge appears on days with a probability of 20 % or more.
 
-### 🧭 Precision Meteorological Instruments (Custom Canvas)
-* **Digital Wind Compass:** Custom Canvas 8-point nautical compass with an animated needle pointing to the true wind vector, displaying current wind speed, gusts, and cardinal heading.
-* **UV Index Radial Arc Gauge:** Semi-circular color-coded gauge showing current UV levels, risk category (*Low* to *Extreme*), and sun-protection advice.
-* **Solar Arc & Sun Tracker:** Displays the sun's trajectory across the sky with sunrise, sunset, dawn, and dusk timestamps.
-* **Precipitation Radar (Demo):** An illustrative animation, clearly labelled as demo. It does **not** show real radar data.
-* **Barometric Pressure Card:** Real-time atmospheric pressure in both **hPa** and **inHg** with directional trend arrows (*Rising*, *Steady*, *Falling*).
-* **Humidity & Dew Point Card:** Relative humidity percentage, calculated dew point, and human comfort index rating.
-* **Visibility & Cloud Cover Card:** Atmospheric line-of-sight distance in miles/km and total cloud obscuration percentage.
-* **Moon Phase Tracker:** Current lunar cycle phase name and illumination percentage (calculated from the lunar cycle).
+### 🧭 Instruments
+| Card | What it shows |
+| :--- | :--- |
+| **Wind compass** | Custom Canvas dial with a needle rotated to the wind direction. Shows speed, "From" cardinal direction (8-point: N, NE, E, SE, S, SW, W, NW), gusts (when reported) and a plain-language description. |
+| **UV index gauge** | Semi-circular color-coded gauge for **today's forecast maximum UV index**, with the risk level (Low to Extreme) and protection advice. Shows "UV index not available" if the service has no value. |
+| **Sun position & daylight** | Sun arc with sunrise and sunset, plus **estimated** first light and dusk (civil twilight, labelled "est."). Handles polar day/night by showing a notice instead of times. |
+| **Humidity** | Relative humidity, dew point and a comfort label (Dry below 35 %, Comfortable 35–65 %, Humid & muggy above 65 %). |
+| **Pressure** | Surface pressure in both **hPa** and **inHg**, with a Rising / Steady / Falling arrow based on the last 3 hours. |
+| **Visibility & cloud cover** | Visibility in km or miles with a short description, plus total cloud cover (%). |
+| **Moon phase** | Phase name and illumination percentage, calculated from the average lunar cycle. |
+| **Precipitation radar (demo)** | An illustrative animation, clearly labelled **DEMO**. It does **not** show real radar data. |
 
-### 🌍 Global Location Search & Multi-City Manager
-* **Live Geocoding Search:** Search and select any city or region across the globe.
-* **Saved Locations Manager:** Store multiple cities with instant switching and deletion capabilities.
-* **Quick-Access Metropolises:** Pre-configured shortcuts for fast city switching.
-* **Honest Offline Handling:** If a refresh fails, the app shows an error and, if available, the last *real* forecast it downloaded together with its download time. It never shows made-up weather.
+### 🌍 Locations
+* **Live search:** find any city or region worldwide via the Open-Meteo geocoding API (debounced as you type).
+* **Saved Locations:** tap the city name in the top bar to switch between saved cities, add new ones or delete them. The last remaining city cannot be removed.
+* **Built-in cities:** San Francisco (default), New York, London, Tokyo, Paris, Sydney, Berlin, Singapore, Dubai and Toronto. The first six start out as your saved list.
+* **Search shortcuts:** "Popular Metropolises" chips (Tokyo, London, New York) in the search dialog.
+* **Search fallback:** if the search service can't be reached, the app searches the built-in city list instead and tells you so.
 
-### 📐 Measured vs. calculated values
-* **From Open-Meteo:** temperature, feels-like, humidity, dew point, pressure, wind speed/direction/gusts, visibility, cloud cover, precipitation probability, UV index, sunrise/sunset and all forecast dates/times (city-local).
-* **Calculated in the app:** pressure trend (change over the previous 3 hours, ±1 hPa threshold), moon phase, and *estimated* first light / dusk (civil twilight from latitude and date, labelled “est.”).
-* Anything the service does not provide is shown as “—” instead of a guessed number.
+### 📡 Honest Error & Offline Handling
+* A failed load with nothing to show gives a clear error message and a **Try Again** button.
+* If a *refresh* fails and the app already downloaded a real forecast for that city during the current session, it keeps showing it with a banner stating that live data is unavailable and when the forecast was downloaded.
+* Errors are specific: no connection, server error (with HTTP status), or incomplete/malformed data.
+* Refresh with the ↻ button in the top bar. There is no automatic background refresh.
+
+### 📐 Measured vs. Calculated Values
+
+| Source | Values |
+| :--- | :--- |
+| **From Open-Meteo** | Temperature, feels-like, humidity, dew point, surface pressure, wind speed / direction / gusts, visibility, cloud cover, precipitation probability, weather codes, today's max UV index, sunrise / sunset, and all forecast dates and times (in the city's local time zone) |
+| **Calculated in the app** | Pressure trend (change over the previous 3 hours, ±1 hPa threshold), moon phase, estimated first light / dusk, weather notices, wind direction label and description, humidity comfort label, unit conversions. Dew point is calculated (Magnus formula) only if the service omits it. |
+| **Not available** | Shown as "—" or a "not available" message, never guessed |
 
 ---
 
-## 🛠️ Tech Stack & Tooling
+## 🛠️ Tech Stack
 
-| Component | Technology | Badge / Logo |
-| :--- | :--- | :--- |
-| **Core Language** | Kotlin 2.0+ | ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white) |
-| **Operating System** | Android 7.0+ (API 24), targets API 36 | ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) |
-| **UI Toolkit** | Jetpack Compose | ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white) |
-| **Design System** | Material Design 3 (M3) | ![Material 3](https://img.shields.io/badge/Material%20Design%203-757575?style=for-the-badge&logo=materialdesign&logoColor=white) |
-| **Concurrency & Flow** | Kotlin Coroutines & StateFlow | ![Coroutines](https://img.shields.io/badge/Kotlin%20Coroutines-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white) |
-| **IDE & Build Suite** | Android Studio & Gradle (Kotlin DSL) | ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white) ![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white) |
-| **Networking** | Square Retrofit 2.12 & OkHttp 4 | ![Retrofit](https://img.shields.io/badge/Square%20Retrofit-231F20?style=for-the-badge&logo=square&logoColor=white) ![OkHttp](https://img.shields.io/badge/Square%20OkHttp-231F20?style=for-the-badge&logo=square&logoColor=white) |
-| **JSON Serialization** | Square Moshi | ![Moshi](https://img.shields.io/badge/Moshi%20JSON-231F20?style=for-the-badge&logo=json&logoColor=white) |
-| **Data Provider** | Open-Meteo REST API | ![Open-Meteo](https://img.shields.io/badge/Open--Meteo-0284C7?style=for-the-badge&logo=icloud&logoColor=white) |
-| **Typography** | Google Fonts (Outfit & Inter) | ![Google Fonts](https://img.shields.io/badge/Google%20Fonts-4285F4?style=for-the-badge&logo=googlefonts&logoColor=white) |
-| **Unit Testing** | Robolectric Local JVM Testing | ![Robolectric](https://img.shields.io/badge/Robolectric-3DDC84?style=for-the-badge&logo=android&logoColor=white) |
+| Component | Technology |
+| :--- | :--- |
+| **Language** | Kotlin 2.2.10 |
+| **Platform** | Android 7.0+ (minSdk 24), compile/target SDK 36 |
+| **UI** | Jetpack Compose (BOM 2024.09.00) with Material Design 3, custom Canvas drawing |
+| **Architecture** | Single `ViewModel` exposing a `StateFlow`, repository + parser layers |
+| **Concurrency** | Kotlin Coroutines & StateFlow |
+| **Networking** | Retrofit 2.12.0, OkHttp 4.10.0 (10 s connect / 15 s read / 25 s total timeouts) |
+| **JSON** | Moshi 1.15.2 |
+| **Data provider** | Open-Meteo Forecast & Geocoding APIs (no API key required) |
+| **Typography** | Outfit (headings, numerals) and Inter (body text), bundled in the app |
+| **Build** | Android Gradle Plugin 8.13.1, Gradle 9.3.1, Kotlin DSL, version catalog |
+| **Testing** | JUnit 4, Robolectric 4.16.1, Compose UI Test, kotlinx-coroutines-test |
+
+### Project layout
+```
+app/src/main/java/com/example/
+├── MainActivity.kt                 # Entry point, applies system theme once
+├── data/
+│   ├── api/WeatherApiService.kt    # Retrofit interface + requested Open-Meteo fields
+│   ├── model/                      # Domain models, unit conversions, exceptions
+│   └── repository/
+│       ├── WeatherRepository.kt    # Network calls, error mapping, city search
+│       └── OpenMeteoParser.kt      # Validates and converts raw responses
+└── ui/
+    ├── components/                 # Icons, range bar, UV gauge, compass, sun arc, radar demo
+    ├── screens/ModernWeatherScreen.kt
+    ├── theme/                      # Colors, M3 schemes, typography
+    └── viewmodel/WeatherViewModel.kt
+```
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+1. **JDK 17 or newer** (`java -version`).
+2. **Android SDK** (API 36) with `adb` on your `PATH`.
+3. An Android device with **USB debugging** enabled, or an Android Virtual Device (AVD).
+4. An internet connection (for dependencies on first build, and for weather data at runtime).
 
-Ensure your development machine has:
-1. **JDK 17 or JDK 21** installed (`java -version`).
-2. **Android SDK** with platform tools / `adb` configured in your system `PATH`.
-3. An Android device with **USB Debugging enabled** or an active Android Virtual Device (AVD).
-
-Verify connected device:
+Verify your device is connected:
 ```bash
 adb devices
 ```
 
----
+### Running in Android Studio (recommended)
+1. Open **Android Studio** (a recent version that supports AGP 8.13).
+2. Choose **File > Open…** and select the repository root.
+3. Let Gradle sync. Android Studio downloads the required Gradle version automatically.
+4. Select a device or emulator and click **Run ▶** (`Shift + F10`).
 
-### Running via Command Line (`cmd` / `bash` / `zsh`)
+### Running from the command line
+
+> **Note:** this repository does not include the Gradle wrapper scripts (`gradlew` / `gradlew.bat`), only `gradle/wrapper/gradle-wrapper.properties`, which pins **Gradle 9.3.1**. Either let Android Studio sync the project, install Gradle 9.3.1 yourself, or generate the wrapper once with `gradle wrapper`. After that you can use `./gradlew` (macOS / Linux) or `gradlew.bat` (Windows) in place of `gradle` below.
 
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/your-username/wind-channel.git
    cd wind-channel
    ```
-
-2. **Build and install the app directly to your device:**
-   * **Windows (`cmd` / PowerShell):**
-     ```cmd
-     gradle installDebug
-     ```
-     *(or `gradlew.bat installDebug` if using the Gradle wrapper)*
-   * **macOS / Linux:**
-     ```bash
-     gradle installDebug
-     ```
-     *(or `./gradlew installDebug` if using the Gradle wrapper)*
-
-3. **Launch the application via ADB:**
+2. **Build and install on the connected device:**
+   ```bash
+   gradle installDebug
+   ```
+3. **Launch the app:**
    ```bash
    adb shell am start -n com.aistudio.baroqueweather.vptm/com.example.MainActivity
    ```
-   *(or `adb shell monkey -p com.aistudio.baroqueweather.vptm -c android.intent.category.LAUNCHER 1`)*
 
 > [!TIP]
-> If you already had an earlier build installed on your device or emulator with a different signature, uninstall it first:
+> If an earlier build with a different signature is already installed, uninstall it first:
 > ```bash
 > adb uninstall com.aistudio.baroqueweather.vptm
 > ```
 
----
-
-### Building the Standalone APK
-
-If you want to generate an installable `.apk` file:
-
-* **Windows (`cmd` / PowerShell):**
-  ```cmd
-  gradle assembleDebug
-  ```
-* **macOS / Linux:**
-  ```bash
-  gradle assembleDebug
-  ```
-
-The generated APK will be available at:
+### Building a debug APK
+```bash
+gradle assembleDebug
 ```
-app/build/outputs/apk/debug/app-debug.apk
-```
+Output: `app/build/outputs/apk/debug/app-debug.apk`
 
-To install the APK directly:
+Install it with:
 ```bash
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
+> The debug build is signed with the `debug.keystore` in the project root (it is created automatically if missing). A **release** build expects your own keystore and the environment variables `KEYSTORE_PATH`, `STORE_PASSWORD` and `KEY_PASSWORD`.
+
+### Running the tests
+```bash
+gradle testDebugUnitTest
+```
+The suite runs on the local JVM (no device needed) and covers:
+* Parsing of Open-Meteo responses, including missing and `null` values
+* Unit conversions, wind directions, pressure trend and moon phase
+* Repository error mapping (network, HTTP, malformed or incomplete data)
+* ViewModel behavior: error states, caching, city search and saved cities, theme handling
+* Compose UI checks for the error and "stale forecast" screens
+
+Instrumented tests (`gradle connectedDebugAndroidTest`) currently contain only the default example test.
+
 ---
 
-### Running via Android Studio
-
-1. Open **Android Studio**.
-2. Select **File > Open...** and navigate to the root directory of this repository.
-3. Allow Gradle to synchronize dependencies.
-4. Select your connected device or emulator in the toolbar.
-5. Click the green **Run (▶)** button or press `Shift + F10`.
-
----
-
-### Running Unit & Robolectric Tests
-
-To execute the test suite (including weather calculations, cardinal wind directions, and string assertions):
-
-* **Windows (`cmd` / PowerShell):**
-  ```cmd
-  gradle testDebugUnitTest
-  ```
-* **macOS / Linux:**
-  ```bash
-  gradle testDebugUnitTest
-  ```
+## ⚠️ Current Limitations
+* **No persistence.** Saved cities, the selected city, unit and theme choices, and the "last downloaded forecast" are held in memory only. They reset when the app process is closed.
+* **Not location-aware.** The app does not request device location. Choose a city manually.
+* **UV is a daily maximum**, not a live reading.
+* **Weather notices are model-derived**, not official alerts. Always consult your national weather service for warnings.
+* **Radar is a demo animation** and does not show real precipitation.
+* **Pressure is surface (station) pressure**, not sea-level pressure.
 
 ---
 
 ## 🔒 Privacy & Permissions
 
-Wind Channel values privacy and resource safety:
-* **Zero Location Tracking:** Geocoding searches are query-based; the app does not monitor background GPS telemetry.
-* **Zero Third-Party Trackers:** No ad networks, analytics SDKs, or background telemetry services.
-* **No Account Required:** Completely functional without login, registration, or cloud credentials.
+* **Permissions:** only `INTERNET` and `ACCESS_NETWORK_STATE`.
+* **No device location:** the app never reads GPS or network location. Forecast requests contain the coordinates of the *city you selected*, and search requests contain the text you typed. Both are sent to Open-Meteo.
+* **No trackers:** no ad networks, analytics SDKs or crash-reporting services, and no accounts or sign-in.
+* **Logging:** HTTP request lines (which include coordinates) are logged only in debug builds, never in release builds.
+
+---
+
+## 📄 Data & Credits
+
+Weather and geocoding data are provided by [Open-Meteo.com](https://open-meteo.com/) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Please review Open-Meteo's terms of use, especially if you plan to use the app commercially or at high request volumes.
