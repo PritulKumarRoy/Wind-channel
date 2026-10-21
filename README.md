@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="e.png" width="120" height="120" alt="ic_launcher"/>
+  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="120" height="120" alt="Wind Channel app icon"/>
 </div>
 
 <h1 align="center">Wind Channel</h1>
