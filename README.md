@@ -3,7 +3,7 @@
 </div>
 
 <h1 align="center">Wind Channel</h1>
-<h3 align="center"><em>A modern weather app for Android built with **Kotlin** and **Jetpack Compose (Material Design 3)**. It uses the free [Open-Meteo](https://open-meteo.com/) forecast and geocoding APIs to show current conditions, a 24-hour hourly ribbon, a 10-day outlook and a set of custom Canvas-drawn weather instruments, in a light and a dark theme.</em></h3>
+<h3 align="center"><em>A modern weather app for Android built with 'Kotlin' and 'Jetpack Compose (Material Design 3)'. It uses the free [Open-Meteo](https://open-meteo.com/) forecast and geocoding APIs to show current conditions, a 24-hour hourly ribbon, a 10-day outlook and a set of custom Canvas-drawn weather instruments, in a light and a dark theme.</em></h3>
 
 <br>
 
